@@ -42,5 +42,28 @@ def display_menu():
 - (Q)uit"""
     print(menu)
 
+def display_projects(projects):
+    incomplete = [project for project in projects if not project.is_complete()]
+    complete = [project for project in projects if project.is_complete()]
+
+    incomplete = sorted(incomplete, key=lambda project: project.priority)
+    complete = sorted(complete, key=lambda project: project.priority)
+    print("Incomplete projects: ")
+    for project in incomplete:
+        print(f"  {project.format_for_display()}")
+
+    print("Completed projects: ")
+    for project in complete:
+        print(f"  {project.format_for_display()}")
+
+def add_new_project(project):
+    print("Let's add a new project")
+    name = input("Name: ")
+    start_date = input("Start date (dd/mm/yy): ")
+    priority = int(input("Priority: "))
+    cost_estimate = float(input("Cost estimate: "))
+    completion_percentage = int(input("Percent complete: "))
+    project.append(Project(name, start_date, priority, cost_estimate, completion_percentage))
+
 main()
 
