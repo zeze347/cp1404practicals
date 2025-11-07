@@ -79,7 +79,23 @@ def update_project(projects):
     if new_priority != "":
         projects[choice].priority = int(new_priority)
 
-
+def filter_projects_by_date(projects):
+    try:
+        user_date = input("Show projects that start after date (dd/mm/yy): ")
+        user_date = parse_date(user_date)
+        projects_after_user_date = []
+        for project in projects:
+            project_start_date = parse_date(project.start_date)
+            if project_start_date >= user_date:
+                projects_after_user_date.append(project)
+        projects_after_user_date.sort(key=lambda single_project: parse_date(single_project.start_date))
+        for project in projects_after_user_date:
+            print(project.format_for_display())
+    except ValueError:
+        print("Dates must be in dd/mm/yy format")
+def parse_date(date_string):
+    parsed_date = datetime.datetime.strptime(date_string.strip(), "%d/%m/%Y").date()
+    return parsed_date
 
 main()
 
